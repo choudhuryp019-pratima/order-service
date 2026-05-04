@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 
 	    public Order createOrder(OrderRequest request) {
 	    	
-	    	 // 🔹 Step 1: Check stock from Inventory Service
+	    	 //Checking stock from Inventory Service
 	        String checkUrl = "http://localhost:8086/inventory/check?productName="
 	                + request.getProductName()
 	                + "&quantity=" + request.getQuantity();
@@ -32,14 +32,14 @@ import java.time.LocalDateTime;
 	            throw new RuntimeException("Product out of stock");
 	        }
 
-	        // 🔹 Step 2: Reduce stock in Inventory Service
+	        //Reduce stock in Inventory Service
 	        String reduceUrl = "http://localhost:8086/inventory/reduce?productName="
 	                + request.getProductName()
 	                + "&quantity=" + request.getQuantity();
 
 	        restTemplate.postForObject(reduceUrl, null, String.class);
 
-	        // 🔹 Step 3: Create Order
+	        //Create Order
 	        Order order = Order.builder()
 	                .productName(request.getProductName())
 	                .quantity(request.getQuantity())
